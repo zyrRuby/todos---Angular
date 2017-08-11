@@ -1,0 +1,32 @@
+1、添加数据的时候，在input框按下enter键,就会将数据提交，这个可以通过两个方式来实现：
+第一种方式：利用事件对象的方式   添加ng-keyup=‘add($event)' 时间，利用enter键的keycode是13来处理事件
+第二种方式：利用form表单按下enter键会触发submit事件，给input表单包裹一个form标签
+<form ng-submit="add(inpValue)">
+<input class="new-todo" placeholder="What needs to be done?" autofocus ng-model="inpValue">
+</form>
+2、编辑数据的时候-----
+双击的时候，当前的任务变成了一个文本框ng-dblclick
+这个神奇的效果本质：有二个标签，一个是label,一个是input,
+如果是平时，label显示，如果是编辑的时候，input显示 --> 对应的editing类名
+html代码结构的布局写法需要注意
+<!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
+		<li ng-class="{completed:item.complete,editing:isEditing==$index}" ng-repeat="item in todolist | filter : isComplete track by $index">
+			<div class="view">
+				<input class="toggle" type="checkbox" checked ng-model="item.complete">
+				<label ng-dblclick="edit($index)">{{item.name}}</label>
+				<button class="destroy" ng-click="del($index)"></button>
+			</div>
+				<form ng-submit="save()">
+					<input class="edit" ng-model="item.name">
+				</form>
+		</li>
+3、删除数组中指定的某一项
+Array.splice( )
+array.splice(start)
+array.splice(start, deleteCount) 
+array.splice(start, deleteCount, item1, item2, ...)
+4、如果一个表达式是由多个别的数据模型或者是某个函数(返回值由多个别的数据模型运算结果运算而来)的返回值的话，
+当这些多个别的数据模型的值发生变化的时候，也会重新刷新一下当前这个表达式的值
+5、filter过滤器的使用
+<li ng-repeat="item in todos | filter : isCompleted">
+6、通过$watch监视锚点值的变化
